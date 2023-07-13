@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>cros middleware test</title>
+    <script src="https://code.jquery.com/jquery-3.7.0.js"
+            integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+<body>
+<script>
+    $('body').append("test cron<br>");
+    $.ajax({
+        url: "http://127.0.0.1:8081/",
+        method: "post",
+        crossDomain: true,
+        beforeSend: function (xhr) {
+            xhr.withCredentials = true;  // 设置认证请求
+        },
+        success: function (data) {
+            $('body').append("jquery:" + data.code);
+        }
+    });
+    axios.post("http://127.0.0.1:8081/").then(function (response) {
+        $('body').append("axios："+response.data.code);
+    }).catch(function (error) {
+        console.log(error);
+    });
+</script>
+</body>
+</html>
